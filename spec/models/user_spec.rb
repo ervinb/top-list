@@ -17,4 +17,7 @@ describe User do
   it { should have_db_column(:current_sign_in_ip).of_type(:string) }
   it { should have_db_column(:last_sign_in_ip).of_type(:string) }
 
+  it { should validate_uniqueness_of(:email) }
+
+  it { should have_many(:polls) }
 end
