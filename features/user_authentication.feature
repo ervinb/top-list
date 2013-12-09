@@ -13,11 +13,10 @@ Feature: A visitor of the application can authenticate with the application
   @javascript
   Scenario: Signing in
     Given I am on the home page
-    And I have an account
     Then I should be able to sign in
 
   @javascript
   Scenario: Signing out
     Given I am on the home page
     And I am signed in
-    Then I should be able to sign out 
+    Then I should be able to sign out

@@ -4,7 +4,7 @@ end
 
 When(/^I register$/) do
   @user = FactoryGirl.create(:user)
-  sign_in
+  register
 end
 
 Then(/^I should see a Create Poll button$/) do
@@ -12,7 +12,7 @@ Then(/^I should see a Create Poll button$/) do
   page.should have_link 'New Poll'
 end
 
-def sign_in
+def register
   click_button "Register"
 
   fill_in "user_email", :with => @user.email

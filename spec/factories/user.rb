@@ -3,7 +3,7 @@ require 'factory_girl'
 FactoryGirl.define do
   factory :user do
     sequence(:email) { |n| "user_#{n}@gmail.com" }
-    password "123456pass"
-    password_confirmation "123456pass"
+    password "12345678"
+    password_confirmation "12345678"
   end
 end
