@@ -18,14 +18,13 @@ class PollsController < ApplicationController
 
   def create
     @poll = Poll.new(poll_params)
+    @poll.user = current_user
 
     respond_to do |format|
       if @poll.save
         format.html { redirect_to @poll, notice: 'Poll was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @poll }
       else
         format.html { render action: 'new' }
-        format.json { render json: @poll.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -34,10 +33,8 @@ class PollsController < ApplicationController
     respond_to do |format|
       if @poll.update(poll_params)
         format.html { redirect_to @poll, notice: 'Poll was successfully updated.' }
-        format.json { head :no_content }
       else
         format.html { render action: 'edit' }
-        format.json { render json: @poll.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -56,6 +53,6 @@ class PollsController < ApplicationController
     end
 
     def poll_params
-      params.require(:poll).permit(:name, :user_id, :record_id)
+      params.require(:poll).permit(:name)
     end
 end
