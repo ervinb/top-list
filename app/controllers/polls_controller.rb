@@ -14,6 +14,7 @@ class PollsController < ApplicationController
   end
 
   def edit
+    @record = @poll.records.build
   end
 
   def create
