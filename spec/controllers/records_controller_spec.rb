@@ -6,7 +6,6 @@ describe RecordsController do
 
     let(:user) { mock_model(User) }
     let(:poll) { mock_model(Poll, :id => 1, :name => "nPoll", :user => user) }
-    let(:polls) { [] }
     let(:record) { mock_model(Record, :name => 'book1') }
 
     before :each do
@@ -17,7 +16,7 @@ describe RecordsController do
 
       before :each do
         Poll.should_receive(:find).with(poll.id.to_s) { poll }
-        controller.stub_chain(:poll, :records, :build).with(poll.name) { poll }
+        poll.stub_chain(:records, :build).with(record.name) {record}
       end
 
       context "with valid attributes" do
@@ -27,9 +26,20 @@ describe RecordsController do
         end
 
         it "redirects to the poll :show page" do
-          post :create, record: record.to_json, :format => :json
+          post :create, poll_id: poll.id
         end
 
+      end
+
+      context "with invalid parameters" do
+        before :each do
+          poll.should_receive(:save) { false }
+        end
+
+        it "redirects to the poll's :edit pageg" do
+          post :create, poll_id: poll.id
+          response.should render_template poll_edit_path(poll)
+        end
       end
 
     end

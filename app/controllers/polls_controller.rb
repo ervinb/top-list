@@ -11,13 +11,14 @@ class PollsController < ApplicationController
 
   def new
     @poll = Poll.new
+    3.times{ @poll.records.build }
   end
 
   def edit
-    @record = @poll.records.build
   end
 
   def create
+    debugger
     @poll = Poll.new(poll_params)
     @poll.user = current_user
 
@@ -54,6 +55,6 @@ class PollsController < ApplicationController
     end
 
     def poll_params
-      params.require(:poll).permit(:name)
+      params.require(:poll).permit(:name, records_attributes: [:name] )
     end
 end

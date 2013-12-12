@@ -1,18 +1,7 @@
-<b> Records </b>
+<b> Add a new record </b>
 
-<ul id="records">
-  <% @poll.records.each do |record| %>
-    <%= render record %>
-  <% end %>
-</ul>
-
-<%= form_for [@poll, @record], remote: true do |f| %>
-
-  <%= f.fields_for :record do |rf| %>
-    <%= rf.label :name %>
-    <%= rf.text_field :name %>
-  <% end %>
-
-  <%= f.submit "Add record" %>
-
+<%= form_for @record  do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.submit  %>
 <% end %>
