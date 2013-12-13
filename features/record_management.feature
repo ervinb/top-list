@@ -4,6 +4,7 @@ Feature: Manage items in the polls
     I want to manage the items in the poll
     So that I can customize the poll
 
+  @javascript
   Scenario: Record creation
     Given I am on the home page
     And I am signed in
@@ -11,6 +12,7 @@ Feature: Manage items in the polls
     When I edit the poll
     Then I should be able to add items to the poll
 
+  @javascript
   Scenario: Records removal
     Given I am on the home page
     And I am signed in

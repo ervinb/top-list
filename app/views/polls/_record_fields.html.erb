@@ -1,6 +1,10 @@
-<p>
-  <%= f.label :name, "Record" %>
-  <%= f.text_field :name %>
-  <%= f.hidden_field :_destroy %>
-  <%= link_to_function 'remove', "remove_fields(this)" %>
-</p>
+<%= builder.fields_for :records do |f| %>
+  <p>
+    <%= f.label :name, "Record" %>
+    <%= f.text_field :name %>
+    <%= f.hidden_field :_destroy %>
+    <%= f.link_to_remove 'Remove' %>
+  </p>
+<% end %>
+
+<p> <%= builder.link_to_add "Add a record", :records %> </p>

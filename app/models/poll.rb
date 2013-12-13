@@ -7,6 +7,6 @@ class Poll < ActiveRecord::Base
   has_many :recipients, :dependent => :destroy
   has_many :records, :dependent => :destroy
 
-  accepts_nested_attributes_for :records
+  accepts_nested_attributes_for :records, :allow_destroy => true
 
 end

@@ -55,6 +55,6 @@ class PollsController < ApplicationController
     end
 
     def poll_params
-      params.require(:poll).permit(:name, records_attributes: [:name] )
+      params.require(:poll).permit(:name, records_attributes: [:id, :name, :_destroy] )
     end
 end

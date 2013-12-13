@@ -3,8 +3,10 @@ When(/^I edit the poll$/) do
 end
 
 Then(/^I should be able to add items to the poll$/) do
-  fill_in "poll_records_name", :with => "Item 1"
-  click_button "Add record"
+  click_link "Add a record"
+  find_field("Record").set("My Record")
+  click_button('Update poll')
+  debugger
 
-  page.should have_content "Item 1"
+  page.should have_content "My Record"
 end
