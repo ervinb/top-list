@@ -5,6 +5,8 @@ TopList::Application.routes.draw do
     resources :records
   end
 
+  post "polls/:id/vote" => "polls#vote"
+
   root "polls#index"
 
   # The priority is based upon order of creation: first created -> highest priority.

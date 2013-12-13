@@ -49,6 +49,11 @@ class PollsController < ApplicationController
     end
   end
 
+  def vote
+    debugger
+    1+1
+  end
+
   private
     def set_poll
       @poll = Poll.find(params[:id])
