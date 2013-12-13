@@ -6,7 +6,7 @@
 </p>
 
   <strong>Records:</strong>
-  <ul id="records">
+  <ul id="records" data-poll-id="<%= @poll.id.to_s %>">
     <% @poll.records.each do |record| %>
       <%= render record %>
     <% end %>
