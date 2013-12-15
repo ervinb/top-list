@@ -2,6 +2,8 @@ class PollsController < ApplicationController
   before_action :set_poll, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, :except => [:index, :show]
 
+  NUMBER_OF_BUILT_RECORDS = 2
+
   def index
     @polls = Poll.all
   end
@@ -11,7 +13,7 @@ class PollsController < ApplicationController
 
   def new
     @poll = Poll.new
-    3.times{ @poll.records.build }
+    NUMBER_OF_BUILT_RECORDS.times{ @poll.records.build }
   end
 
   def edit
