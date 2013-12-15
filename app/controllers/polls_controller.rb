@@ -18,7 +18,6 @@ class PollsController < ApplicationController
   end
 
   def create
-    debugger
     @poll = Poll.new(poll_params)
     @poll.user = current_user
 
