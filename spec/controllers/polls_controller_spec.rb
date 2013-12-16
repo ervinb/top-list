@@ -93,8 +93,8 @@ describe PollsController do
     describe "POST :vote" do
 
       before :each do
-        record1 = FactoryGirl.create(:record, :poll => poll)
-        record2 = FactoryGirl.create(:record, :poll => poll)
+        entry1 = FactoryGirl.create(:entry, :poll => poll)
+        entry2 = FactoryGirl.create(:entry, :poll => poll)
 
       end
 

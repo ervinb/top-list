@@ -1,11 +1,12 @@
 require 'spec_helper'
 
-describe Poll do
+describe Entry do
   it { should have_db_column(:name).of_type(:string) }
-  it { should have_db_column(:user_id).of_type(:integer) }
+  it { should have_db_column(:poll_id).of_type(:integer) }
+  it { should have_db_column(:score_id).of_type(:integer) }
   it { should have_db_column(:created_at).of_type(:datetime) }
   it { should have_db_column(:updated_at).of_type(:datetime) }
 
-  it { should belong_to(:user) }
-  it { should have_many(:entries) }
+  it { should belong_to(:poll) }
+  it { should have_many(:scores) }
 end

@@ -1,8 +1,8 @@
 Given(/^a poll is created$/) do
 
   @poll = FactoryGirl.create(:poll)
-  record_1 = FactoryGirl.create(:record, :poll => @poll)
-  record_2 = FactoryGirl.create(:record, :poll => @poll)
+  entry_1 = FactoryGirl.create(:entry, :poll => @poll)
+  entry_2 = FactoryGirl.create(:entry, :poll => @poll)
 
 end
 

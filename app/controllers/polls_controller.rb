@@ -2,7 +2,7 @@ class PollsController < ApplicationController
   before_action :set_poll, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, :except => [:index, :show]
 
-  NUMBER_OF_BUILT_RECORDS = 2
+  NUMBER_OF_BUILT_ENTRIES = 2
 
   def index
     @polls = Poll.all
@@ -13,7 +13,7 @@ class PollsController < ApplicationController
 
   def new
     @poll = Poll.new
-    NUMBER_OF_BUILT_RECORDS.times{ @poll.records.build }
+    NUMBER_OF_BUILT_ENTRIES.times{ @poll.entries.build }
   end
 
   def edit
@@ -61,6 +61,6 @@ class PollsController < ApplicationController
     end
 
     def poll_params
-      params.require(:poll).permit(:name, records_attributes: [:id, :name, :_destroy] )
+      params.require(:poll).permit(:name, entries_attributes: [:id, :name, :_destroy] )
     end
 end
