@@ -90,4 +90,17 @@ describe PollsController do
 
     end
 
+    describe "POST :vote" do
+
+      before :each do
+        record1 = FactoryGirl.create(:record, :poll => poll)
+        record2 = FactoryGirl.create(:record, :poll => poll)
+
+      end
+
+      it "processes the vote and redirects to the poll's :show page" do
+        response.should redirect_to poll_path(poll)
+      end
+    end
+
 end
