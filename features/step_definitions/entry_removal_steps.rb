@@ -5,5 +5,5 @@ Then(/^I should be able to remove items from the poll$/) do
   click_link "Remove"
   click_button "Update"
 
-  page.should_not have_content("My Record")
+  page.should_not have_content("My Entry")
 end

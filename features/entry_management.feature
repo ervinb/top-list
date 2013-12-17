@@ -5,7 +5,7 @@ Feature: Manage items in the polls
     So that I can customize the poll
 
   @javascript
-  Scenario: Record creation
+  Scenario: Entry creation
     Given I am on the home page
     And I am signed in
     And I create a new poll MyPoll
@@ -13,7 +13,7 @@ Feature: Manage items in the polls
     Then I should be able to add items to the poll
 
   @javascript
-  Scenario: Records removal
+  Scenario: Entry removal
     Given I am on the home page
     And I am signed in
     And I create a new poll MyPoll

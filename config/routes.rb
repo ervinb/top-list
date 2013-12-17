@@ -2,7 +2,7 @@ TopList::Application.routes.draw do
   devise_for :users
 
   resources :polls do
-    resources :records
+    resources :entries
   end
 
   post "polls/:id/vote" => "polls#vote"

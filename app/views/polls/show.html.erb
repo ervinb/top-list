@@ -5,12 +5,14 @@
   <%= @poll.name %>
 </p>
 
-  <strong>Records:</strong>
-  <ul id="records" data-poll-id="<%= @poll.id.to_s %>">
-    <% @poll.records.each do |record| %>
-      <%= render record %>
+  <strong>Entries:</strong>
+  <ul id="entries" data-poll-id="<%= @poll.id.to_s %>">
+    <% @poll.entries.each do |entry| %>
+      <%= render entry %>
     <% end %>
   </ul>
+
+  <%= button_tag "Vote", :id => "vote" %>
 
 <%= link_to 'Edit', edit_poll_path(@poll) %> |
 <%= link_to 'Back', polls_path %>

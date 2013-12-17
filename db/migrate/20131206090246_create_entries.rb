@@ -1,6 +1,6 @@
-class CreateRecords < ActiveRecord::Migration
+class CreateEntries < ActiveRecord::Migration
   def change
-    create_table :records do |t|
+    create_table :entries do |t|
       t.string :name
       t.integer :poll_id
       t.integer :score_id
