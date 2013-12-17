@@ -7,6 +7,8 @@ describe PollsController do
     let(:user) { mock_model(User) }
     let(:poll) { mock_model(Poll, :id => 1, :name => "nPoll", :user => user) }
     let(:polls) { [] }
+    let(:entry) { mock_model(Entry) }
+    let(:entry_ids) { [entry.id.to_s] }
 
     context "user not authenticated" do
 
@@ -93,14 +95,16 @@ describe PollsController do
     describe "POST :vote" do
 
       before :each do
-        entry1 = FactoryGirl.create(:entry, :poll => poll)
-        entry2 = FactoryGirl.create(:entry, :poll => poll)
-
+        Poll.should_receive(:find).with(poll.id.to_s)
+        controller.stub(:entry_ids=).with(entry_ids) { entry_ids }
+        controller.stub(:build_scores).with(entry_ids).and_return( true )
       end
 
       it "processes the vote and redirects to the poll's :show page" do
-        response.should redirect_to poll_path(poll)
+        post :vote, :id => poll.id, :entries => entry.id.to_json, :format => :json
+        response.body.to_json.should = poll_path(poll).to_json
       end
+
     end
 
 end
