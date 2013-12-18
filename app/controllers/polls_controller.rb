@@ -51,34 +51,22 @@ class PollsController < ApplicationController
   end
 
   def vote
-    entry_ids = params[:entries]
-    build_scores(entry_ids)
+    @poll.build_scores(params[:entries])
 
     respond_to do |format|
       flash[:notice] = "Voting successful!"
       format.json { render json: { :path => poll_path(@poll) } }
     end
-
   end
 
   private
 
-    def set_poll
-      @poll = Poll.find(params[:id])
-    end
+  def set_poll
+    @poll = Poll.find(params[:id])
+  end
 
-    def poll_params
-      params.require(:poll).permit(:name, entries_attributes: [:id, :name, :_destroy] )
-    end
-
-    def build_scores(entry_ids)
-
-      entry_ids.each_with_index do |entry_id, index|
-        entry = @poll.entries.find(entry_id)
-        entry.scores.build(:score => index)
-        entry.save
-      end
-
-    end
+  def poll_params
+    params.require(:poll).permit(:name, entries_attributes: [:id, :name, :_destroy] )
+  end
 
 end
