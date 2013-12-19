@@ -1,20 +1,10 @@
-<h1>Listing polls</h1>
+<h4>Listing polls</h4>
 
 <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Record</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
   <tbody>
     <% @polls.each do |poll| %>
       <tr>
-        <td><%= poll.name %></td>
-        <td><%= poll.user_id %></td>
+        <td><strong><%= poll.name %><strong></td>
         <td><%= link_to 'Show', poll %></td>
         <td><%= link_to 'Edit', edit_poll_path(poll) %></td>
         <td><%= link_to 'Destroy', poll, method: :delete, data: { confirm: 'Are you sure?' } %></td>

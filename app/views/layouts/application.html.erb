@@ -7,11 +7,22 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= button_to "Register", new_user_registration_path, :method => :get %>
-  <% if user_signed_in? %>
-    <%= button_to "Logout", destroy_user_session_path, :method => :delete %>
-    <%= current_user.email%>
-  <%end %>
+  <nav class="navbar navbar-inverse" role="navigation">
+    <%= link_to "TopList", root_path, :class => "navbar-brand" %>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <% if user_signed_in? %>
+          <li>
+            <%= link_to "Logout", destroy_user_session_path, :method => :delete %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to "Register", new_user_registration_path, :method => :get %>
+          </li>
+        <%end %>
+      </li>
+    </ul>
+  </nav>
 <%= yield %>
 
 </body>

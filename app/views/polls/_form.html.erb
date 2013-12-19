@@ -10,7 +10,11 @@
   <%= render 'entry_fields', :builder => f %>
 
 <% unless @poll.new_record? %>
-  <%= link_to "Lock poll", lockdown_poll_path, :method => :post, :id => "lock" %>
+  <% if @poll.locked %>
+    <%= link_to "Unlock poll", lockdown_poll_path, :method => :post, :id => "lock" %>
+  <% else  %>
+    <%= link_to "Lock poll", lockdown_poll_path, :method => :post, :id => "lock" %>
+  <% end %>
 <% end %>
 
   <div class="actions">
