@@ -19,7 +19,7 @@ describe Entry do
     end
 
     it "should return the total score of the entry" do
-      @entry.total_score.should == 20 
+      @entry.total_score.should == 20
     end
 
   end

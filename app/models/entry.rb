@@ -9,10 +9,10 @@ class Entry < ActiveRecord::Base
   def total_score
     sum = 0
     scores.each do |score_instance|
-      sum += score_instance.score
+      sum += score_instance.value
     end
 
-    sum 
+    sum
   end
 
 end
