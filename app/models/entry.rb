@@ -8,6 +8,7 @@ class Entry < ActiveRecord::Base
 
   def total_score
     sum = 0
+
     scores.each do |score_instance|
       sum += score_instance.value
     end

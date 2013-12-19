@@ -18,10 +18,10 @@ describe Poll do
 
       @entry_ids = [@entry_1.id.to_s, @entry_2.id.to_s]
     end
-      
+
     it "saves the entry score" do
       expect {
-        @poll.build_scores @entry_ids   
+        @poll.build_scores @entry_ids
       }.to change(Score, :count).by(2)
 
       @entry_1.scores.first.score.should == 0
