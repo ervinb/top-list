@@ -65,7 +65,7 @@ class PollsController < ApplicationController
       if @poll.lock
         format.html{ redirect_to @poll, notice: "Poll locked!" }
       else
-        format.html{ redirect_to @poll, notice: "Poll unlocked!" }
+        format.html{ redirect_to edit_poll_path, notice: "Poll unlocked!" }
       end
 
     end

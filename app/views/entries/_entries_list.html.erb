@@ -1,0 +1,6 @@
+<strong>Entry list</strong>
+<ul>
+  <% @poll.entries.each do |entry| %>
+    <%=  content_tag(:li, entry.name, :id => entry.id) %>
+  <% end %>
+</ul>
