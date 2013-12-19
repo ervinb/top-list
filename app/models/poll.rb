@@ -18,4 +18,9 @@ class Poll < ActiveRecord::Base
 
   end
 
+  def lock
+    update_column(:locked, !locked)
+    locked
+  end
+
 end

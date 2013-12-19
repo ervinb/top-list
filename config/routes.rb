@@ -2,7 +2,13 @@ TopList::Application.routes.draw do
   devise_for :users
 
   resources :polls do
+
     resources :entries
+
+    member do
+      post "lockdown"
+    end
+
   end
 
   post "polls/:id/vote" => "polls#vote"

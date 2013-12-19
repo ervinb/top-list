@@ -1,5 +1,5 @@
 class PollsController < ApplicationController
-  before_action :set_poll, only: [:show, :edit, :update, :destroy, :vote]
+  before_action :set_poll, only: [:show, :edit, :update, :destroy, :vote, :lockdown]
   before_filter :authenticate_user!, :except => [:index, :show, :vote]
 
   NUMBER_OF_BUILT_ENTRIES = 2
@@ -57,6 +57,19 @@ class PollsController < ApplicationController
       flash[:notice] = "Voting successful!"
       format.json { render json: { :path => poll_path(@poll) } }
     end
+  end
+
+  def lockdown
+
+    respond_to do |format|
+      if @poll.lock
+        format.html{ redirect_to @poll, notice: "Poll locked!" }
+      else
+        format.html{ redirect_to @poll, notice: "Poll unlocked!" }
+      end
+
+    end
+
   end
 
   private
