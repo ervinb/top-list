@@ -15,9 +15,5 @@ When(/^I vote on the poll$/) do
 end
 
 Then(/^I should see a success message$/) do
-
-  within(:css, "#notice") do
-    page.should have_content "Thanks for your participation!"
-  end
-
+  page.should have_content "Voting successful!"
 end

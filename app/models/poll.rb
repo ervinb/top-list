@@ -12,7 +12,7 @@ class Poll < ActiveRecord::Base
   def build_scores(entry_ids)
 
     entries.find(entry_ids).each_with_index do |entry, index|
-      entry.scores.build(:score => index)
+      entry.scores.build(:value => index)
       entry.save!
     end
 

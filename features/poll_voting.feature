@@ -4,6 +4,7 @@ Feature: Voting on a poll
   I want to vote on polls
   So that my vote has an effect on the final result
 
+  @javascript
   Scenario: Vote on a poll
     Given a poll is created
     And I am on the poll's page
