@@ -5,10 +5,15 @@ describe PollsController do
   include Devise::TestHelpers
 
   let(:user) { mock_model(User) }
-  let(:poll) { mock_model(Poll, :id => 1, :name => "nPoll", :user => user, :locked => false) }
+
+  let(:poll) { mock_model(Poll, :name => "nPoll", :user => user, :locked => false) }
   let(:polls) { [] }
+
   let(:entry) { mock_model(Entry) }
   let(:entry_ids) { [entry.id.to_s] }
+
+  let(:recipient) { mock_model(Recipient, :poll => poll) }
+  let(:recipients) { [] }
 
   context "user not authenticated" do
 
@@ -124,6 +129,7 @@ describe PollsController do
     describe "GET :invitations" do
       before :each do
         Poll.should_receive(:find).with(poll.id.to_s) { poll }
+        poll.stub_chain(:recipients, :build) { recipients }
       end
       it "redirects the invitation form" do
         get :invitations, :id => poll.id
@@ -131,10 +137,42 @@ describe PollsController do
       end
     end
 
+    describe "POST :send_invitations" do
+
+      before :each do
+        Poll.should_receive(:find).with(poll.id.to_s) { poll }
+        poll.should_receive(:invite_recipients)
+      end
+
+      context "sends the invites"
+        before :each do
+          poll.should_receive(:update) { true }
+        end
+
+        it "sends the invites and redirect to poll's :show" do
+          post :send_invitations, :id => poll.id, :poll => { :name => poll.name }, :recipients => recipients
+          response.should redirect_to poll_path(poll)
+        end
+
+      end
+
+      context "doesn't send the invites" do
+        before :each do
+          Poll.should_receive(:find).with(poll.id.to_s) { poll }
+          poll.should_receive(:update) { false }
+        end
+
+        it "sends the invites and redirect to poll's :show" do
+          post :send_invitations, :id => poll.id, :poll => { :name => poll.name }, :recipients => recipients
+          response.should render_template "invitations"
+        end
+
+      end
+
   end
 
 
-  describe "POST :vote" do 
+  describe "POST :vote" do
     before :each do
       Poll.should_receive(:find).with(poll.id.to_s) { poll }
       poll.should_receive(:build_scores).with(entry_ids)

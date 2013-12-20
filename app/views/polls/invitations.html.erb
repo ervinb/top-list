@@ -1,4 +1,4 @@
-<%= nested_form_for @poll do |f| %>
+<%= nested_form_for @poll, :url => send_invitations_poll_path do |f| %>
   <%= f.fields_for :recipients do |recipient_form| %>
     <%= recipient_form.label :email, "Email" %>
     <%= recipient_form.text_field :email %>

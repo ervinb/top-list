@@ -3,8 +3,8 @@ When(/^I lock down the poll$/) do
 end
 
 Then(/^I should be able to invite others$/) do
-  click_button "Invite participants"
-  fill_in "participant-email", :with => "friend@gmail.com"
-  click_button "Send invitations"
+  click_link "Invite participants"
+  fill_in "Email", :with => "friend@gmail.com"
+  click_button "Send"
   page.should have_content("Invitations sent!")
 end

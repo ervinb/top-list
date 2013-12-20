@@ -1,8 +1,9 @@
 class PollsController < ApplicationController
-  before_action :set_poll, only: [:show, :edit, :update, :destroy, :vote, :lockdown, :invitations]
+  before_action :set_poll, only: [:show, :edit, :update, :destroy, :vote, :lockdown, :invitations, :send_invitations]
   before_filter :authenticate_user!, :except => [:index, :show, :vote]
 
   NUMBER_OF_BUILT_ENTRIES = 2
+  NUMBER_OF_BUILT_RECIPIENTS = 1
 
   def index
     @polls = Poll.all
@@ -33,6 +34,7 @@ class PollsController < ApplicationController
   end
 
   def update
+    debugger
     respond_to do |format|
       if @poll.update(poll_params)
         format.html { redirect_to @poll, notice: 'Poll was successfully updated.' }
@@ -73,6 +75,23 @@ class PollsController < ApplicationController
   end
 
   def invitations
+    NUMBER_OF_BUILT_RECIPIENTS.times{ @poll.recipients.build }
+  end
+
+  def send_invitations
+
+    respond_to do |format|
+      if @poll.update(poll_params)
+
+          @poll.invite_recipients
+          format.html { redirect_to @poll, :notice => "Invitations sent!" }
+
+      else
+          format.html { render :action => "invitations", :notice => "There was an error!" }
+      end
+
+    end
+
   end
 
   private

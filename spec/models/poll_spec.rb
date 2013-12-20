@@ -25,8 +25,8 @@ describe Poll do
         @poll.build_scores @entry_ids
       }.to change(Score, :count).by(2)
 
-      @entry_1.scores.first.score.should == 0
-      @entry_2.scores.first.score.should == 1
+      @entry_1.scores.first.value.should == 0
+      @entry_2.scores.first.value.should == 1
 
     end
 
@@ -42,6 +42,23 @@ describe Poll do
       @poll.reload
 
       @poll.locked.should == true
+    end
+
+  end
+
+  describe ".invite_recipients" do
+    before :each do
+      @poll = FactoryGirl.create(:poll)
+
+      @recipient_1 = FactoryGirl.create(:recipient, :poll => @poll)
+      @recipient_2 = FactoryGirl.create(:recipient, :poll => @poll)
+      @recipients = [@recipient_1, @recipient_2]
+    end
+
+    it "invites the recipients" do
+      @poll.invite_recipients(@recipients)
+      @recipient_1.token.should_not == nil
+      @recipient_2.token.should_not == nil
     end
 
   end

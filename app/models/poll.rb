@@ -24,4 +24,17 @@ class Poll < ActiveRecord::Base
     locked
   end
 
+  def invite_recipients
+    if recipients.present?
+      recipients.each do |recipient|
+        recipient.token = SecureRandom.hex(12)
+        recipient.save
+      end
+
+      # send emails logic here WIP
+      
+    end
+    
+  end
+
 end

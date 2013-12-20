@@ -7,7 +7,9 @@ TopList::Application.routes.draw do
 
     member do
       post "lockdown"
+
       get "invitations"
+      patch "send_invitations"
     end
 
   end
