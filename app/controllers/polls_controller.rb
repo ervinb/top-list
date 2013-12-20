@@ -25,30 +25,33 @@ class PollsController < ApplicationController
     @poll.user = current_user
 
     respond_to do |format|
+
       if @poll.save
         format.html { redirect_to @poll, notice: 'Poll was successfully created.' }
       else
         format.html { render action: 'new' }
       end
+
     end
   end
 
   def update
-    debugger
     respond_to do |format|
       if @poll.update(poll_params)
+
         format.html { redirect_to @poll, notice: 'Poll was successfully updated.' }
       else
         format.html { render action: 'edit' }
       end
+
     end
   end
 
   def destroy
     @poll.destroy
+
     respond_to do |format|
       format.html { redirect_to polls_url }
-      format.json { head :no_content }
     end
   end
 
@@ -64,6 +67,7 @@ class PollsController < ApplicationController
   def lockdown
 
     respond_to do |format|
+
       if @poll.lock
         format.html{ redirect_to @poll, notice: "Poll locked!" }
       else
@@ -81,11 +85,10 @@ class PollsController < ApplicationController
   def send_invitations
 
     respond_to do |format|
-      if @poll.update(poll_params)
 
+      if @poll.update(poll_params)
           @poll.invite_recipients
           format.html { redirect_to @poll, :notice => "Invitations sent!" }
-
       else
           format.html { render :action => "invitations", :notice => "There was an error!" }
       end

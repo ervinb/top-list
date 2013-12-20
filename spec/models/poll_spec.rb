@@ -56,7 +56,11 @@ describe Poll do
     end
 
     it "invites the recipients" do
-      @poll.invite_recipients(@recipients)
+      @poll.invite_recipients
+
+      @recipient_1.reload
+      @recipient_2.reload
+
       @recipient_1.token.should_not == nil
       @recipient_2.token.should_not == nil
     end

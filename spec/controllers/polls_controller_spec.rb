@@ -94,7 +94,53 @@ describe PollsController do
 
     end
 
+    describe "PUT :update" do
+
+      context "updates the poll" do
+
+        before :each do
+          Poll.should_receive(:find).with(poll.id.to_s) { poll }
+          poll.should_receive(:update) { true }
+        end
+
+        it "updates the poll" do
+          put :update, :id => poll.id, :poll => { :name => "Poll" }
+          response.should redirect_to poll_path poll
+        end
+
+      end
+
+      context "doesn't update the poll" do
+
+        before :each do
+          Poll.should_receive(:find).with(poll.id.to_s) { poll }
+          poll.should_receive(:update) { false }
+        end
+
+        it "updates the poll" do
+          put :update, :id => poll.id, :poll => { :name => "Poll" }
+          response.should render_template "edit"
+        end
+
+      end
+
+    end
+
+    describe "POST :destroy" do
+
+      before :each do
+        Poll.should_receive(:find).with(poll.id.to_s) { poll }
+      end
+
+      it "redirects to the polls list" do
+        delete :destroy, :id => poll.id
+        response.should redirect_to polls_path
+      end
+
+    end
+
     describe "POST :lockdown" do
+
       before :each do
         Poll.should_receive(:find).with(poll.id.to_s) { poll }
       end
@@ -109,9 +155,11 @@ describe PollsController do
           response.should redirect_to poll_path(poll)
           flash[:notice].should == "Poll locked!"
         end
+
       end
 
       context "unlock the poll" do
+
         before :each do
           poll.should_receive(:lock) { false }
         end
@@ -127,14 +175,17 @@ describe PollsController do
     end
 
     describe "GET :invitations" do
+
       before :each do
         Poll.should_receive(:find).with(poll.id.to_s) { poll }
         poll.stub_chain(:recipients, :build) { recipients }
       end
+
       it "redirects the invitation form" do
         get :invitations, :id => poll.id
         response.should render_template "invitations"
       end
+
     end
 
     describe "POST :send_invitations" do
@@ -157,6 +208,7 @@ describe PollsController do
       end
 
       context "doesn't send the invites" do
+
         before :each do
           Poll.should_receive(:find).with(poll.id.to_s) { poll }
           poll.should_receive(:update) { false }
@@ -173,6 +225,7 @@ describe PollsController do
 
 
   describe "POST :vote" do
+
     before :each do
       Poll.should_receive(:find).with(poll.id.to_s) { poll }
       poll.should_receive(:build_scores).with(entry_ids)
