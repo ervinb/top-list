@@ -3,5 +3,8 @@ When(/^I lock down the poll$/) do
 end
 
 Then(/^I should be able to invite others$/) do
-  pending # express the regexp above with the code you wish you had
+  click_button "Invite participants"
+  fill_in "participant-email", :with => "friend@gmail.com"
+  click_button "Send invitations"
+  page.should have_content("Invitations sent!")
 end

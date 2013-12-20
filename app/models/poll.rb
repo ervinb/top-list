@@ -8,6 +8,7 @@ class Poll < ActiveRecord::Base
   has_many :entries, :dependent => :destroy
 
   accepts_nested_attributes_for :entries, :allow_destroy => true
+  accepts_nested_attributes_for :recipients, :allow_destroy => true
 
   def build_scores(entry_ids)
 

@@ -113,12 +113,22 @@ describe PollsController do
 
         it "redirects to the poll's page" do
           post :lockdown, :id => poll.id
-          response.should redirect_to poll_path(poll)
+          response.should redirect_to edit_poll_path(poll)
           flash[:notice].should == "Poll unlocked!"
         end
 
       end
 
+    end
+
+    describe "GET :invitations" do
+      before :each do
+        Poll.should_receive(:find).with(poll.id.to_s) { poll }
+      end
+      it "redirects the invitation form" do
+        get :invitations, :id => poll.id
+        response.should render_template "invitations"
+      end
     end
 
   end

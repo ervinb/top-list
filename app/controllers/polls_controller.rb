@@ -1,5 +1,5 @@
 class PollsController < ApplicationController
-  before_action :set_poll, only: [:show, :edit, :update, :destroy, :vote, :lockdown]
+  before_action :set_poll, only: [:show, :edit, :update, :destroy, :vote, :lockdown, :invitations]
   before_filter :authenticate_user!, :except => [:index, :show, :vote]
 
   NUMBER_OF_BUILT_ENTRIES = 2
@@ -72,6 +72,9 @@ class PollsController < ApplicationController
 
   end
 
+  def invitations
+  end
+
   private
 
   def set_poll
@@ -79,7 +82,7 @@ class PollsController < ApplicationController
   end
 
   def poll_params
-    params.require(:poll).permit(:name, entries_attributes: [:id, :name, :_destroy] )
+    params.require(:poll).permit(:name, entries_attributes: [:id, :name, :_destroy], recipients_attributes: [:id, :email, :_destroy] )
   end
 
 end
