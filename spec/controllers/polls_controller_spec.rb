@@ -228,11 +228,11 @@ describe PollsController do
 
     before :each do
       Poll.should_receive(:find).with(poll.id.to_s) { poll }
-      poll.should_receive(:build_scores).with(entry_ids)
+      poll.should_receive(:build_scores).with(entry_ids, "$token$")
     end
 
     it "processes the vote and redirects to the poll's :show page" do
-      post :vote, :id => poll.id, :entries => entry_ids, :format => :json
+      post :vote, :id => poll.id, :token => "$token$", :entries => entry_ids, :format => :json
       response.body.should == { path: poll_path(poll) }.to_json
     end
 

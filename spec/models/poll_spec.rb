@@ -13,6 +13,7 @@ describe Poll do
   describe ".build_scores" do
     before :each do
       @poll = FactoryGirl.create(:poll)
+      @recipient = FactoryGirl.create(:recipient)
 
       @entry_1 = FactoryGirl.create(:entry, :poll => @poll)
       @entry_2 = FactoryGirl.create(:entry, :poll => @poll)
@@ -22,11 +23,14 @@ describe Poll do
 
     it "saves the entry score" do
       expect {
-        @poll.build_scores @entry_ids
+        @poll.build_scores(@entry_ids, @recipient.token)
       }.to change(Score, :count).by(2)
 
       @entry_1.scores.first.value.should == 0
+      @entry_1.scores.first.token.should == @recipient.token
+
       @entry_2.scores.first.value.should == 1
+      @entry_2.scores.first.token.should == @recipient.token
 
     end
 
