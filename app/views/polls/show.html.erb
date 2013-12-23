@@ -11,8 +11,12 @@
 
   <% unless current_user.present? and current_user.poll_owner(@poll.id) %>
     <%= button_tag "Vote", :id => "vote", :class => "btn btn-sm btn-primary" %>
-  <% else %>
+  <% end %>
+
+  <% if @poll.locked %>
     <%= link_to "Invite participants", invitations_poll_path , :class => "btn btn-success btn-sm"%>
+  <% else %>
+    <p class="alert alert-info">Before you can invite you friends to vote, you'll have to lock down the poll on the "Edit" page.</p>
   <% end %>
 
 <table class="well">

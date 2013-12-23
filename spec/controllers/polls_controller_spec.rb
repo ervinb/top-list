@@ -94,6 +94,41 @@ describe PollsController do
 
     end
 
+    describe "GET :edit" do
+
+      before :each do
+        Poll.should_receive(:find) { poll }
+      end
+
+      context "poll is not permanently locked" do
+
+        before :each do
+          poll.should_receive(:permanent_lock) { false }
+        end
+
+        it "renders the :edit page" do
+          get :edit, id: poll.id
+          response.should render_template "edit"
+        end
+
+      end
+
+      context "poll is permanently locked" do
+
+        before :each do
+          poll.should_receive(:permanent_lock) { true }
+        end
+
+        it "renders the show page with a notice" do
+          get :edit, id: poll.id
+          response.should redirect_to poll_path(poll)
+          flash[:notice].should == "The poll is permanently locked!"
+        end
+
+      end
+
+    end
+
     describe "PUT :update" do
 
       context "updates the poll" do

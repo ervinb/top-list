@@ -18,6 +18,13 @@ class PollsController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      unless @poll.permanent_lock
+        format.html { render action: "edit" }
+      else
+        format.html { redirect_to @poll, notice: "The poll is permanently locked!" }
+      end
+    end
   end
 
   def create
