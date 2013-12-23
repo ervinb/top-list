@@ -50,6 +50,9 @@ gem "therubyracer", "~> 0.12.0"
 gem 'jquery-turbolinks', "~> 2.0.1"
 
 gem 'devise'
+
+gem "nested_form"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
