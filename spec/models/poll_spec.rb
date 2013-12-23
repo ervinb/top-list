@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Poll do
   it { should have_db_column(:name).of_type(:string) }
   it { should have_db_column(:user_id).of_type(:integer) }
+  it { should have_db_column(:invites_sent).of_type(:boolean) }
   it { should have_db_column(:created_at).of_type(:datetime) }
   it { should have_db_column(:updated_at).of_type(:datetime) }
   it { should have_db_column(:locked).of_type(:boolean) }
@@ -83,7 +84,21 @@ describe Poll do
 
       @recipient_1.token.should_not == nil
       @recipient_2.token.should_not == nil
+
+      @poll.permanent_lock.should be_true
     end
 
   end
+
+  describe ".permanent_lock" do
+    before :each do
+      @poll = FactoryGirl.create(:poll, :invites_sent => true)
+    end
+
+    it "locks the poll permanently" do
+      @poll.permanent_lock.should be_true
+    end
+  
+  end
+
 end

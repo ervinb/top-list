@@ -6,6 +6,7 @@ FactoryGirl.define do
     name "nPoll"
     user
     locked false
+    invites_sent false
   end
 
 end

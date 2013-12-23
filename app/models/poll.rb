@@ -26,12 +26,19 @@ class Poll < ActiveRecord::Base
     locked
   end
 
+  def permanent_lock
+    invites_sent
+  end
+
   def invite_recipients
+
     if recipients.present?
       recipients.each do |recipient|
         recipient.token = SecureRandom.hex(12)
         recipient.save
       end
+
+      update_column(:invites_sent, true)
 
       # send emails logic here WIP
       
