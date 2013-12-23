@@ -11,24 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131206091600) do
+ActiveRecord::Schema.define(version: 20131220122636) do
 
-  create_table "polls", force: true do |t|
-    t.string   "name"
-    t.integer  "user_id"
-    t.integer  "record_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "recipients", force: true do |t|
-    t.string   "email"
-    t.integer  "poll_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "records", force: true do |t|
+  create_table "entries", force: true do |t|
     t.string   "name"
     t.integer  "poll_id"
     t.integer  "score_id"
@@ -36,9 +21,26 @@ ActiveRecord::Schema.define(version: 20131206091600) do
     t.datetime "updated_at"
   end
 
-  create_table "scores", force: true do |t|
+  create_table "polls", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
     t.integer  "record_id"
-    t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "locked",     default: false
+  end
+
+  create_table "recipients", force: true do |t|
+    t.string   "email"
+    t.integer  "poll_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+  end
+
+  create_table "scores", force: true do |t|
+    t.integer  "entry_id"
+    t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

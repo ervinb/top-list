@@ -1,16 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @poll.name %>
+  <%= render "poll" %>
 </p>
 
-  <strong>Records:</strong>
-  <ul>
-    <% @poll.records.each do |record| %>
-      <%= render record %>
+  <strong>Entries:</strong>
+  <ul id="entries" data-poll-id="<%= @poll.id.to_s %>">
+    <% @poll.entries.each do |entry| %>
+      <%= render entry %>
     <% end %>
   </ul>
+
+  <%= button_tag "Vote", :id => "vote" %>
+  <%= link_to "Invite participants", invitations_poll_path %>
 
 <%= link_to 'Edit', edit_poll_path(@poll) %> |
 <%= link_to 'Back', polls_path %>

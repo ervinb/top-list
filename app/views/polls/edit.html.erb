@@ -1,6 +1,11 @@
-<h1>Editing poll</h1>
-
-<%= render 'form' %>
+<h4>Editing: <%= render 'poll' %></h4>
+<% if @poll.locked %>
+  <%= link_to "Unlock poll", lockdown_poll_path, :method => :post, :id => "lock", :class => "btn btn-primary btn-sm"%><br />
+  <%= render 'entries/entries_list'  %>
+<% else %>
+  <%= link_to "Lock poll", lockdown_poll_path, :method => :post, :id => "lock" %>
+  <%= render 'form' %>
+<% end %>
 
 <%= link_to 'Show', @poll %> |
 <%= link_to 'Back', polls_path %>

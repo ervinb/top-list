@@ -13,7 +13,7 @@ Then(/^I should see a Create Poll button$/) do
 end
 
 def register
-  click_button "Register"
+  click_link "Register"
 
   fill_in "user_email", :with => @user.email
   fill_in "user_password", :with => @user.password

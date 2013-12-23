@@ -53,6 +53,11 @@ gem 'devise'
 
 gem "nested_form"
 
+gem "jquery-ui-rails"
+
+# Boostrap 3
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
+                              :github => 'anjlab/bootstrap-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

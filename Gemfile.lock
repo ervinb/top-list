@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/anjlab/bootstrap-rails.git
+  revision: 461121444e24cdf78357418bfca9f2b8a9a1c518
+  specs:
+    anjlab-bootstrap-rails (3.0.3.0)
+      railties (>= 3.0)
+      sass (>= 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -91,6 +99,8 @@ GEM
     jquery-turbolinks (2.0.1)
       railties (>= 3.1.0)
       turbolinks
+    jquery-ui-rails (4.1.0)
+      railties (>= 3.1.0)
     json (1.8.1)
     libv8 (3.16.14.3)
     mail (2.5.4)
@@ -193,6 +203,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  anjlab-bootstrap-rails!
   capybara
   coffee-rails (~> 4.0.0)
   cucumber-rails
@@ -203,6 +214,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   jquery-turbolinks (~> 2.0.1)
+  jquery-ui-rails
   nested_form
   rails (= 4.0.1)
   rspec-rails
