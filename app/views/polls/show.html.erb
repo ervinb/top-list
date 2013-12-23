@@ -1,8 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <%= render "poll" %>
-</p>
+<p> <%= render "poll" %> </p>
 
   <strong>Entries:</strong>
   <ul id="entries" data-poll-id="<%= @poll.id.to_s %>">
@@ -11,8 +9,29 @@
     <% end %>
   </ul>
 
-  <%= button_tag "Vote", :id => "vote" %>
-  <%= link_to "Invite participants", invitations_poll_path %>
+  <% unless current_user.present? and current_user.poll_owner(@poll.id) %>
+    <%= button_tag "Vote", :id => "vote", :class => "btn btn-sm btn-primary" %>
+  <% end %>
+
+  <% if @poll.locked %>
+    <%= link_to "Invite participants", invitations_poll_path , :class => "btn btn-success btn-sm"%>
+  <% else %>
+    <p class="alert alert-info">Before you can invite you friends to vote, you'll have to lock down the poll on the "Edit" page.</p>
+  <% end %>
+
+<table class="well">
+  <th> <strong>Persons invited</strong> </th>
+
+  <% @poll.recipients.each do |recipient|%>
+    <tr>
+      <td><%= recipient.email %></td>
+      <td><%= link_to "Unique URL", poll_url(@poll.id, :token => recipient.token) %></td>
+    </tr>
+  <% end %>
+
+</table>
+
+<p  id="token"><%= params[:token] %> </p>
 
 <%= link_to 'Edit', edit_poll_path(@poll) %> |
 <%= link_to 'Back', polls_path %>

@@ -18,6 +18,13 @@ class PollsController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      unless @poll.permanent_lock
+        format.html { render action: "edit" }
+      else
+        format.html { redirect_to @poll, notice: "The poll is permanently locked!" }
+      end
+    end
   end
 
   def create
@@ -56,7 +63,7 @@ class PollsController < ApplicationController
   end
 
   def vote
-    @poll.build_scores(params[:entries])
+    @poll.build_scores(params[:entries], params[:token], current_user)
 
     respond_to do |format|
       flash[:notice] = "Voting successful!"
@@ -104,7 +111,7 @@ class PollsController < ApplicationController
   end
 
   def poll_params
-    params.require(:poll).permit(:name, entries_attributes: [:id, :name, :_destroy], recipients_attributes: [:id, :email, :_destroy] )
+    params.require(:poll).permit(:name, :token, entries_attributes: [:id, :name, :_destroy], recipients_attributes: [:id, :email, :_destroy] )
   end
 
 end

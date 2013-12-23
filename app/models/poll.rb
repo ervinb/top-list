@@ -10,10 +10,12 @@ class Poll < ActiveRecord::Base
   accepts_nested_attributes_for :entries, :allow_destroy => true
   accepts_nested_attributes_for :recipients, :allow_destroy => true
 
-  def build_scores(entry_ids)
+  def build_scores(entry_ids, token, current_user)
+
+    return false if not current_user.nil? and current_user.poll_owner(id)
 
     entries.find(entry_ids).each_with_index do |entry, index|
-      entry.scores.build(:value => index)
+      entry.scores.build(:value => index, :token => token)
       entry.save!
     end
 
@@ -24,12 +26,19 @@ class Poll < ActiveRecord::Base
     locked
   end
 
+  def permanent_lock
+    invites_sent
+  end
+
   def invite_recipients
+
     if recipients.present?
       recipients.each do |recipient|
         recipient.token = SecureRandom.hex(12)
         recipient.save
       end
+
+      update_column(:invites_sent, true)
 
       # send emails logic here WIP
       
