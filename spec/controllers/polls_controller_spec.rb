@@ -228,7 +228,7 @@ describe PollsController do
 
     before :each do
       Poll.should_receive(:find).with(poll.id.to_s) { poll }
-      poll.should_receive(:build_scores).with(entry_ids, "$token$")
+      poll.should_receive(:build_scores).with(entry_ids, "$token$", nil) # nil is the current_user in the controller
     end
 
     it "processes the vote and redirects to the poll's :show page" do

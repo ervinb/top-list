@@ -56,7 +56,7 @@ class PollsController < ApplicationController
   end
 
   def vote
-    @poll.build_scores(params[:entries], params[:token])
+    @poll.build_scores(params[:entries], params[:token], current_user)
 
     respond_to do |format|
       flash[:notice] = "Voting successful!"

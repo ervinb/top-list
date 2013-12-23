@@ -10,7 +10,10 @@ class Poll < ActiveRecord::Base
   accepts_nested_attributes_for :entries, :allow_destroy => true
   accepts_nested_attributes_for :recipients, :allow_destroy => true
 
-  def build_scores(entry_ids, token)
+  def build_scores(entry_ids, token, current_user)
+
+    return false if not current_user.nil? and current_user.poll_owner(id)
+
     entries.find(entry_ids).each_with_index do |entry, index|
       entry.scores.build(:value => index, :token => token)
       entry.save!

@@ -11,26 +11,42 @@ describe Poll do
   it { should have_many(:entries) }
 
   describe ".build_scores" do
+        
     before :each do
-      @poll = FactoryGirl.create(:poll)
-      @recipient = FactoryGirl.create(:recipient)
+        @user_1 = FactoryGirl.create(:user)
+        @user_2 = FactoryGirl.create(:user)
 
-      @entry_1 = FactoryGirl.create(:entry, :poll => @poll)
-      @entry_2 = FactoryGirl.create(:entry, :poll => @poll)
+        @poll = FactoryGirl.create(:poll, :user => @user_1)
+        @recipient = FactoryGirl.create(:recipient)
 
-      @entry_ids = [@entry_1.id.to_s, @entry_2.id.to_s]
+        @entry_1 = FactoryGirl.create(:entry, :poll => @poll)
+        @entry_2 = FactoryGirl.create(:entry, :poll => @poll)
+
+        @entry_ids = [@entry_1.id.to_s, @entry_2.id.to_s]
     end
 
-    it "saves the entry score" do
-      expect {
-        @poll.build_scores(@entry_ids, @recipient.token)
-      }.to change(Score, :count).by(2)
+    context "current user is NOT owner" do
 
-      @entry_1.scores.first.value.should == 0
-      @entry_1.scores.first.token.should == @recipient.token
+      it "saves the entry score" do
+        expect {
+          @poll.build_scores(@entry_ids, @recipient.token, @user_2)
+        }.to change(Score, :count).by(2)
 
-      @entry_2.scores.first.value.should == 1
-      @entry_2.scores.first.token.should == @recipient.token
+        @entry_1.scores.first.value.should == 0
+        @entry_1.scores.first.token.should == @recipient.token
+
+        @entry_2.scores.first.value.should == 1
+        @entry_2.scores.first.token.should == @recipient.token
+
+      end
+
+    end
+
+    context "current user is owner" do
+
+      it "doesn't save the entry score" do
+          @poll.build_scores(@entry_ids, @recipient.token, @user_1).should be_false
+      end
 
     end
 

@@ -9,8 +9,11 @@
     <% end %>
   </ul>
 
-  <%= button_tag "Vote", :id => "vote", :class => "btn btn-sm btn-primary" %>
-  <%= link_to "Invite participants", invitations_poll_path , :class => "btn btn-success btn-sm"%>
+  <% unless current_user.present? and current_user.poll_owner(@poll.id) %>
+    <%= button_tag "Vote", :id => "vote", :class => "btn btn-sm btn-primary" %>
+  <% else %>
+    <%= link_to "Invite participants", invitations_poll_path , :class => "btn btn-success btn-sm"%>
+  <% end %>
 
 <table class="well">
   <th> <strong>Persons invited</strong> </th>
