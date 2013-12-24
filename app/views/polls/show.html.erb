@@ -12,50 +12,55 @@
       <% end %>
     </ul>
 
-    <% unless current_user.present? and current_user.poll_owner(@poll.id) %>
-      <%= button_tag "Vote", :id => "vote", :class => "btn btn-sm btn-primary" %>
-    <% end %>
-
-    <% if @poll.locked  and not @poll.permanent_lock %>
-      <%= link_to "Invite participants", invitations_poll_path , :class => "btn btn-success btn-sm"%>
-    <% elsif @poll.permanent_lock %>
-      <p class="alert alert-warning">Your poll is permanently locked.</p>
-    <% else %>
-      <p class="alert alert-info">Before you can invite you friends to vote, you'll have to lock down the poll on the "Edit" page.</p>
-    <% end %>
-
-
-  <p  id="token"><%= params[:token] %> </p>
-
-  <%= link_to 'Edit', edit_poll_path(@poll) %> |
-  <%= link_to 'Back', polls_path %>
-</div>
-
-<div class="col-md-6">
-  <% if @poll.permanent_lock %>
-    <table class="table table-bordered" >
-      <th colspan=2> <strong>Persons invited</strong> </th>
-      <% @poll.recipients.each do |recipient|%>
-        <tr>
-          <td><%= recipient.email %></td>
-          <td><%= link_to "Unique URL", poll_url(@poll.id, :token => recipient.token) %></td>
-        </tr>
+      <% unless current_user.present? and current_user.poll_owner(@poll.id) %>
+        <%= button_tag "Vote", :id => "vote", :class => "btn btn-sm btn-primary" %>
       <% end %>
 
-      <tr>
-        <td colspan=2> <strong>Stats</strong> </td>
-      </tr>
+    <% if current_user.present? %>
 
-        <tr>
-          <td> Invitations </td>
-          <td><strong class="badge"><%= @poll.invites_count %></strong></td>
-        </tr>
+      <% if @poll.locked %>
+        <%= link_to "Invite participants", invitations_poll_path , :class => "btn btn-success btn-sm"%>
+      <% elsif @poll.permanent_lock %>
+        <p class="alert alert-warning">Your poll is permanently locked.</p>
+      <% else %>
+        <p class="alert alert-info">Before you can invite you friends to vote, you'll have to lock down the poll on the "Edit" page.</p>
+      <% end %>
 
-        <tr>
-          <td> Votes </td>
-          <td><strong class="badge"><%= @poll.votes_count %></strong></td>
-        </tr>
 
-    </table>
-  <% end %>
+
+      <p  id="token"><%= params[:token] %> </p>
+
+      <%= link_to 'Edit', edit_poll_path(@poll) %> |
+      <%= link_to 'Back', polls_path %>
+    </div>
+
+    <div class="col-md-6">
+      <% if @poll.permanent_lock  %>
+        <table class="table table-bordered" >
+          <th colspan=2> <strong>Persons invited</strong> </th>
+          <% @poll.recipients.each do |recipient|%>
+            <tr>
+              <td><%= recipient.email %></td>
+              <td><%= link_to "Unique URL", poll_url(@poll.id, :token => recipient.token) %></td>
+            </tr>
+          <% end %>
+
+          <tr>
+            <td colspan=2> <strong>Stats</strong> </td>
+          </tr>
+
+            <tr>
+              <td> Invitations </td>
+              <td><strong class="badge"><%= @poll.invites_count %></strong></td>
+            </tr>
+
+            <tr>
+              <td> Votes </td>
+              <td><strong class="badge"><%= @poll.votes_count %></strong></td>
+            </tr>
+
+        </table>
+      <% end %>
+
+    <% end %>
 <div>
