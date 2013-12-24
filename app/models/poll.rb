@@ -15,6 +15,10 @@ class Poll < ActiveRecord::Base
 
     return false if not current_user.nil? and current_user.poll_owner(id)
 
+    unless token.present?
+      token = SecureRandom.hex(12)
+    end
+
     entries.find(entry_ids).each_with_index do |entry, index|
       entry.scores.build(:value => index, :token => token)
       entry.save!
