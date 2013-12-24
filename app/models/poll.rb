@@ -6,6 +6,7 @@ class Poll < ActiveRecord::Base
 
   has_many :recipients, :dependent => :destroy
   has_many :entries, :dependent => :destroy
+  has_many :scores, :through => :entries
 
   accepts_nested_attributes_for :entries, :allow_destroy => true
   accepts_nested_attributes_for :recipients, :allow_destroy => true
@@ -41,9 +42,17 @@ class Poll < ActiveRecord::Base
       update_column(:invites_sent, true)
 
       # send emails logic here WIP
-      
+
     end
-    
+
+  end
+
+  def invites_count
+    recipients.count
+  end
+
+  def votes_count
+    scores.group(:token).length
   end
 
 end

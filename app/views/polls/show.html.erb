@@ -13,23 +13,38 @@
     <%= button_tag "Vote", :id => "vote", :class => "btn btn-sm btn-primary" %>
   <% end %>
 
-  <% if @poll.locked %>
+  <% if @poll.locked  and not @poll.permanent_lock %>
     <%= link_to "Invite participants", invitations_poll_path , :class => "btn btn-success btn-sm"%>
+  <% elsif @poll.permanent_lock %>
+    <p class="alert alert-warning">Your poll is permanently locked.</p>
   <% else %>
     <p class="alert alert-info">Before you can invite you friends to vote, you'll have to lock down the poll on the "Edit" page.</p>
   <% end %>
 
-<table class="well">
-  <th> <strong>Persons invited</strong> </th>
+<% if @poll.permanent_lock %>
+  <table class="well">
+    <th> <strong>Persons invited</strong> </th>
+    <% @poll.recipients.each do |recipient|%>
+      <tr>
+        <td><%= recipient.email %></td>
+        <td><%= link_to "Unique URL", poll_url(@poll.id, :token => recipient.token) %></td>
+      </tr>
+    <% end %>
 
-  <% @poll.recipients.each do |recipient|%>
-    <tr>
-      <td><%= recipient.email %></td>
-      <td><%= link_to "Unique URL", poll_url(@poll.id, :token => recipient.token) %></td>
-    </tr>
-  <% end %>
+      <tr colspan=2></tr>
 
-</table>
+      <tr>
+        <td> Invitations </td>
+        <td><strong><%= @poll.invites_count %></strong></td>
+      </tr>
+
+      <tr>
+        <td> Votes </td>
+        <td><strong><%= @poll.votes_count %></strong></td>
+      </tr>
+
+  </table>
+<% end %>
 
 <p  id="token"><%= params[:token] %> </p>
 
