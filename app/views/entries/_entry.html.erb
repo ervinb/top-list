@@ -1,1 +1,6 @@
-<%=  content_tag(:li, entry.name, :id => entry.id, :class => "entry-li") %>
+<%=  content_tag(:li, :id => entry.id, :class => "entry-li") do %>
+  <%= entry.name %>
+  <% if current_user.present? and current_user.poll_owner(@poll.id) %>
+    <span class="badge"><%= entry.total_score %> points</span>
+  <% end %>
+<% end %>
