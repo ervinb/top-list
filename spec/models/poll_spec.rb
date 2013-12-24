@@ -33,7 +33,7 @@ describe Poll do
           @poll.build_scores(@entry_ids, @recipient.token, @user_2)
         }.to change(Score, :count).by(2)
 
-        @entry_1.scores.first.value.should == 0
+        @entry_1.scores.first.value.should == 2
         @entry_1.scores.first.token.should == @recipient.token
 
         @entry_2.scores.first.value.should == 1

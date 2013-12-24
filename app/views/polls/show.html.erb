@@ -45,9 +45,11 @@
             </tr>
           <% end %>
 
-          <tr>
-            <td colspan=2> <strong>Stats</strong> </td>
-          </tr>
+
+        </table>
+
+        <table class="table table-bordered">
+          <th colspan=2> <strong>Stats</strong> </th>
 
             <tr>
               <td> Invitations </td>
@@ -58,7 +60,6 @@
               <td> Votes </td>
               <td><strong class="badge"><%= @poll.votes_count %></strong></td>
             </tr>
-
         </table>
       <% end %>
 

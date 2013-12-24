@@ -20,7 +20,7 @@ class Poll < ActiveRecord::Base
     end
 
     entries.find(entry_ids).each_with_index do |entry, index|
-      entry.scores.build(:value => index, :token => token)
+      entry.scores.build(:value => entries.length - index, :token => token)
       entry.save!
     end
 
