@@ -6,6 +6,7 @@
   </div>
 
     <strong>Entries:</strong>
+
     <ul id="entries" data-poll-id="<%= @poll.id.to_s %>">
       <% @poll.entries.each do |entry| %>
         <%= render entry %>
@@ -40,6 +41,13 @@
           <% @poll.recipients.each do |recipient|%>
             <tr>
               <td><%= recipient.email %></td>
+              <td>
+                <% if recipient.has_voted(@poll.id) %>
+                  <span class="label label-info">Voted</span>
+                <% else %>
+                  <span class="label label-warning">Not voted</span>
+                <% end %>
+              </td>
               <td><%= link_to "Unique URL", poll_url(@poll.id, :token => recipient.token) %></td>
             </tr>
           <% end %>
