@@ -3,7 +3,7 @@ $(document).on('ready page:load', function() {
 
   var entry_list = $("#entries");
   var poll_id = entry_list.data('poll-id');
-  var token = $("#token").text();
+  var token = $("#token").val();
   var url = poll_id + "/vote?token=" + token;
   entry_list.sortable()
 

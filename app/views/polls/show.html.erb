@@ -12,6 +12,8 @@
       <% end %>
     </ul>
 
+    <input type="hidden" id="token" value="<%= params[:token] %>"></input>
+
       <% unless current_user.present? and current_user.poll_owner(@poll.id) %>
         <%= button_tag "Vote", :id => "vote", :class => "btn btn-sm btn-primary" %>
       <% end %>
@@ -26,9 +28,6 @@
         <p class="alert alert-info">Before you can invite you friends to vote, you'll have to lock down the poll on the "Edit" page.</p>
       <% end %>
 
-
-
-      <p  id="token"><%= params[:token] %> </p>
 
       <%= link_to 'Edit', edit_poll_path(@poll) %> |
       <%= link_to 'Back', polls_path %>
