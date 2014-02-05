@@ -1,10 +1,27 @@
-<h4>Listing polls</h4>
+<div class="page-header"> 
+  <h4>Listing polls</h4>
+</div>
 
-<table>
+<table class="table table-striped">
   <tbody>
     <% @polls.each do |poll| %>
       <tr>
-        <td><strong><%= poll.name %><strong></td>
+        <td>
+          <strong><%= poll.name %><strong>
+        </td>
+
+        <td>
+          <% if poll.locked %>
+            <span class="label label-warning">Locked</span>
+          <% else %>
+            <span class="label label-primary">Unlocked</span>
+          <% end %>
+
+          <% if poll.permanent_lock %>
+            <span class="label label-success">Invitations sent</span>
+          <% end %>
+        </td>
+
         <td><%= link_to 'Show', poll %></td>
         <td><%= link_to 'Edit', edit_poll_path(poll) %></td>
         <td><%= link_to 'Destroy', poll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -15,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Poll', new_poll_path %>
+<%= link_to 'New Poll', new_poll_path, :class => "btn btn-primary" %>

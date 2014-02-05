@@ -20,4 +20,37 @@ describe User do
   it { should validate_uniqueness_of(:email) }
 
   it { should have_many(:polls) }
+
+  describe ".poll_owner" do
+
+    before :each do
+      @user = FactoryGirl.create(:user)
+    end
+
+    context "current user IS the owner" do
+
+      before :each do
+        @poll = FactoryGirl.create(:poll, :user => @user)
+      end
+
+      it "returns true when current user is the owner of the poll" do
+        @user.poll_owner(@poll.id).should be_true
+      end
+
+    end
+
+    context "current user is NOT the owner" do
+
+      before :each do
+        @poll = FactoryGirl.create(:poll)
+      end
+
+      it "returns true when current user is the owner of the poll" do
+        @user.poll_owner(@poll.id).should be_false
+      end
+
+    end
+
+  end
+
 end

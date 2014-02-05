@@ -1,0 +1,13 @@
+.entry-li {
+  border-bottom: 1px solid #E2E2E2;
+  font-size: 1.5em;
+  height: 37px;
+  line-height: 37px;
+  list-style: none outside none;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.entry-li:hover {
+  cursor: pointer
+}
